@@ -27,7 +27,7 @@ jobs:
       
       - name: Build Image
         run: |
-          docker build --build-arg=${{ matrix.python_version }} -t my_image ./.devcontainer
+          docker build --build-arg python_version=${{ matrix.python_version }} -t my_image ./.devcontainer
 
       - name: Run Container
         run: |
