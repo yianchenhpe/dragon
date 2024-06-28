@@ -41,37 +41,37 @@ jobs:
           docker cp ./ my_container:/dragon
           docker exec -i my_container bash -c "
           # inside container
-          cd dragon && source /etc/profile.d/modules.sh
-          export DRAGON_VERSION=$(grep DRAGON_VERSION src/modulefiles/dragon-dev | awk '{print $3}')
-          export DRAGON_BASE_DIR=$PWD/src
-          echo "DRAGON_BASE_DIR=$DRAGON_BASE_DIR"
-          export DRAGON_INCLUDE_DIR=$DRAGON_BASE_DIR/include
-          export DRAGON_LIB_DIR=$DRAGON_BASE_DIR/lib
-          export DRAGON_BUILD_NTHREADS=6
-          export PYTHONPATH=$DRAGON_BASE_DIR
+          cd dragon && source /etc/profile.d/modules.sh;
+          export DRAGON_VERSION=$(grep DRAGON_VERSION src/modulefiles/dragon-dev | awk '{print $3}');
+          export DRAGON_BASE_DIR=$PWD/src;
+          echo \"DRAGON_BASE_DIR=$DRAGON_BASE_DIR\";
+          export DRAGON_INCLUDE_DIR=$DRAGON_BASE_DIR/include;
+          export DRAGON_LIB_DIR=$DRAGON_BASE_DIR/lib;
+          export DRAGON_BUILD_NTHREADS=6;
+          export PYTHONPATH=$DRAGON_BASE_DIR;
 
-          echo "Building and activating new, clean environment."
-          python3 -m venv --clear _env
-          . _env/bin/activate
-          python3 -m pip install -U pip
-          python3 -m pip install -r src/requirements.txt -c src/constraints.txt
-          export PATH=$PWD/hack:$PATH
-          echo "Building source code."
-          cd external
-          make clean
-          make build-capnproto
-          cd ..
-          cd src
-          make dist
-          cd ..
+          echo \"Building and activating new, clean environment.\";
+          python3 -m venv --clear _env;
+          . _env/bin/activate;
+          python3 -m pip install -U pip;
+          python3 -m pip install -r src/requirements.txt -c src/constraints.txt;
+          export PATH=$PWD/hack:$PATH;
+          echo \"Building source code.\";
+          cd external;
+          make clean;
+          make build-capnproto;
+          cd ..;
+          cd src;
+          make dist;
+          cd ..;
 
-          set -x
-          ARTIFACT=$(ls ./src/release)
-          GITHASH=$(git rev-parse --short HEAD)
-          echo "GITHASH=$GITHASH" >> $GITHUB_OUTPUT
-          echo "VERSION=$DRAGON_VERSION" >> $GITHUB_OUTPUT
-          mv ./src/release/$ARTIFACT ./src/release/dragon-$DRAGON_VERSION-py${{ matrix.python_version }}-$GITHASH.tar.gz
-          echo "ARTIFACT=$(ls ./src/release)" >> $GITHUB_OUTPUT
+          set -x;
+          ARTIFACT=$(ls ./src/release);
+          GITHASH=$(git rev-parse --short HEAD);
+          echo "GITHASH=$GITHASH" >> $GITHUB_OUTPUT;
+          echo "VERSION=$DRAGON_VERSION" >> $GITHUB_OUTPUT;
+          mv ./src/release/$ARTIFACT ./src/release/dragon-$DRAGON_VERSION-py${{ matrix.python_version }}-$GITHASH.tar.gz;
+          echo "ARTIFACT=$(ls ./src/release)" >> $GITHUB_OUTPUT;
           "
 
           docker cp my_container:/dragon/src/release ./src/
