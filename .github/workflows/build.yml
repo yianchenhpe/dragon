@@ -39,8 +39,7 @@ jobs:
           set -x
           docker exec -i my_container mkdir dragon
           docker cp ./ my_container:/dragon
-          docker exec -it my_container bash -c 
-          
+          docker exec -i my_container bash -c "
           # inside container
           cd dragon && source /etc/profile.d/modules.sh
           export DRAGON_VERSION=$(grep DRAGON_VERSION src/modulefiles/dragon-dev | awk '{print $3}')
@@ -72,8 +71,8 @@ jobs:
           echo "GITHASH=$GITHASH" >> $GITHUB_OUTPUT
           echo "VERSION=$DRAGON_VERSION" >> $GITHUB_OUTPUT
           mv ./src/release/$ARTIFACT ./src/release/dragon-$DRAGON_VERSION-py${{ matrix.python_version }}-$GITHASH.tar.gz
-          echo "ARTIFACT=$(ls ./src/release)" >> $GITHUB_OUTPUT"
-          exit
+          echo "ARTIFACT=$(ls ./src/release)" >> $GITHUB_OUTPUT
+          "
 
           docker cp my_container:/dragon/src/release ./src/
       
