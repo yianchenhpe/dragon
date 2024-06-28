@@ -39,8 +39,8 @@ jobs:
           set -x
           docker exec -i my_container mkdir dragon
           docker cp ./ my_container:/dragon
-          docker exec -i my_container bash -c "
-          # inside container
+          docker exec -i my_container bash -c ";
+          # inside container;
           cd dragon && source /etc/profile.d/modules.sh;
           export DRAGON_VERSION=$(grep DRAGON_VERSION src/modulefiles/dragon-dev | awk '{print $3}');
           export DRAGON_BASE_DIR=$PWD/src;
@@ -49,7 +49,6 @@ jobs:
           export DRAGON_LIB_DIR=$DRAGON_BASE_DIR/lib;
           export DRAGON_BUILD_NTHREADS=6;
           export PYTHONPATH=$DRAGON_BASE_DIR;
-
           echo \"Building and activating new, clean environment.\";
           python3 -m venv --clear _env;
           . _env/bin/activate;
@@ -64,7 +63,6 @@ jobs:
           cd src;
           make dist;
           cd ..;
-
           set -x;
           ARTIFACT=$(ls ./src/release);
           GITHASH=$(git rev-parse --short HEAD);
