@@ -33,7 +33,7 @@ jobs:
           docker exec -i my_container mkdir dragon
           docker cp ./ my_container:/dragon
           docker exec -i my_container bash -c "cd dragon && source /etc/profile.d/modules.sh && source hack/clean_build && cd doc && make"
-          docker cp my_container:/dragon/doc .
+          docker cp my_container:/dragon/doc/_build/html .
           rm -rf ./external
       
       - name: Setup Pages
