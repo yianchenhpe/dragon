@@ -3,6 +3,7 @@ name: pages-build-deployment
 run-name: pages build and deployment
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - docs
